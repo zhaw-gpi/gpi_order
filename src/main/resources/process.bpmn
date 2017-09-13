@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.9.0">
+  <bpmn:process id="gpi_order" name="gpi_order" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="StartEventOrderReceived" targetRef="IntermediateThrowEvent_0ggisq7" />
+    <bpmn:startEvent id="StartEventOrderReceived" name="new order received">
+      <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0gqrr2b" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_13633zp" sourceRef="IntermediateThrowEvent_0ggisq7" targetRef="EndEventProcessEnded" />
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0ggisq7">
+      <bpmn:incoming>SequenceFlow1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_13633zp</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="EndEventProcessEnded" name="equipment delivered">
+      <bpmn:incoming>SequenceFlow_13633zp</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="Message_0lcd1om" camunda:class="ch.zhaw.gpi_order.delegates.SendMessage" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0gqrr2b" name="new order received" />
+  <bpmn:message id="Message_0lcd1om" name="equipment_delivered" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="gpi_order">
+      <bpmndi:BPMNEdge id="SequenceFlow_08va5r8_di" bpmnElement="SequenceFlow1">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="391" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="255" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_1hm6tax_di" bpmnElement="StartEventOrderReceived">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="167" y="138" width="50" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_13633zp_di" bpmnElement="SequenceFlow_13633zp">
+        <di:waypoint xsi:type="dc:Point" x="427" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="632" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529.5" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0yqdt26_di" bpmnElement="IntermediateThrowEvent_0ggisq7">
+        <dc:Bounds x="391" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="409" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0mmj1gd_di" bpmnElement="EndEventProcessEnded">
+        <dc:Bounds x="632" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="627" y="138" width="51" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
